@@ -1,0 +1,32 @@
+#Static
+providers:
+  file:
+    directory: "/etc/traefik/dynamic"
+    watch: true
+
+
+entryPoints:
+  web:
+    address: :80
+    forwardedHeaders:
+      insecure: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+    forwardedHeaders:
+      insecure: true
+
+
+certificatesResolvers:
+  myresolver:
+    # Enable ACME (Let's Encrypt): automatic SSL.
+    acme:
+      email: "MyEmail@email.com"
+      storage: "acme.json"
+      tlsChallenge:
+      dnsChallenge:
+        provider: vultr

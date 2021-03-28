@@ -1,0 +1,25 @@
+#Dynamic
+http:
+  routers:
+    main:
+      rule: "Host(`example.com`)"
+      service: "hello_service"
+      entryPoints:
+      - web
+      - websecure
+      tls:
+        certResolver: myresolver
+    test:
+      rule: "Host(`sub.example.com`) || Host(`sub1.example.com`)"
+      service: "hello_service"
+      entryPoints:
+      - web
+      - websecure
+      tls:
+        certResolver: myresolver
+  services:
+    hello_service:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: "http://hello"

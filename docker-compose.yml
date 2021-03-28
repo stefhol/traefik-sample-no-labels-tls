@@ -1,0 +1,17 @@
+version: "3.8"
+services: 
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: always
+    ports: 
+    - "80:80"
+    - "443:443"
+    - "8080:8080"
+    - "4000:4000"
+    volumes: 
+    - "./config:/etc/traefik/"
+    environment: 
+    - VULTR_API_KEY=MYAPIKEY
+  hello: 
+    image: nginxdemos/hello
